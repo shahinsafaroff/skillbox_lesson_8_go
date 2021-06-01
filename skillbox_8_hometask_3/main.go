@@ -12,8 +12,14 @@ func lemonadeChange(bills []int) bool {
 	for _, b := range bills {
 		switch b {
 		case 5:
+			if fives <=0 || tens <=0 {
+				return false
+			}
 			fives++
 		case 10:
+			if fives <=0 || tens <=0 {
+				return false
+			}
 			fives--
 			tens++
 		case 20:
@@ -24,7 +30,7 @@ func lemonadeChange(bills []int) bool {
 				fives -= 3
 			}
 		}
-		if fives <0 || tens < 0 {
+		if fives <=0 || tens <=0 {
 			return false
 		}
 	}
