@@ -2,37 +2,50 @@ package main
 
 import "fmt"
 
-func main() {
- var bills = []int {5, 10, 5, 20}
- fmt.Println(lemonadeChange(bills))
-}
-
 func lemonadeChange(bills []int) bool {
 	fives, tens := 0, 0
-	for _, b := range bills {
-		switch b {
+	for _, pay := range bills {
+		switch pay {
 		case 5:
-			if fives <=0 || tens <=0 {
-				return false
-			}
 			fives++
 		case 10:
-			if fives <=0 || tens <=0 {
+			switch {
+			case fives > 0:
+				fives--
+				tens--
+			default:
 				return false
 			}
-			fives--
-			tens++
 		case 20:
-			if tens > 0 {
+			switch {
+			case tens > 0 && fives > 0:
 				tens--
 				fives--
-			}else {
+			case fives >= 3:
 				fives -= 3
+			default:
+				return false
 			}
-		}
-		if fives <=0 || tens <=0 {
-			return false
 		}
 	}
 	return true
+}
+
+func main() {
+	var bills [] int
+	bills = []int {5, 5, 5, 10, 20}
+	fmt.Println("Given: ", bills)
+	fmt.Println("Change: ", lemonadeChange(bills))
+
+	bills = []int {10, 10}
+	fmt.Println("Given: ", bills)
+	fmt.Println("Change: ", lemonadeChange(bills))
+
+	bills = []int {5, 5, 10, 10, 20}
+	fmt.Println("Given: ", bills)
+	fmt.Println("Change: ", lemonadeChange(bills))
+
+	bills = []int {5, 5, 5, 10, 5, 10, 20}
+	fmt.Println("Given: ", bills)
+	fmt.Println("Change: ", lemonadeChange(bills))
 }
